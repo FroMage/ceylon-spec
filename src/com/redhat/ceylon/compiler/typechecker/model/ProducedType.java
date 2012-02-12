@@ -1047,6 +1047,7 @@ public class ProducedType extends ProducedReference {
                 Map<TypeParameter, ProducedType> substitutions) {
             ProducedType type = new ProducedType();
             type.setDeclaration(dec);
+            type.setUnderlyingType(pt.getUnderlyingType());
             ProducedType qt = pt.getQualifyingType();
             if (qt!=null) {
                 type.setQualifyingType(substitute(qt, substitutions));
@@ -1216,4 +1217,13 @@ public class ProducedType extends ProducedReference {
         }
     }
 
+    private String underlyingType;
+
+    public String getUnderlyingType() {
+        return underlyingType;
+    }
+
+    public void setUnderlyingType(String underlyingType) {
+        this.underlyingType = underlyingType;
+    }
 }

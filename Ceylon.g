@@ -2782,12 +2782,13 @@ QMARK
     ;
 
 CHAR_LITERAL
-    :   '`' ( ~ NonCharacterChars | EscapeSequence ) '`'
+    :   '`' ( ~ /* NonCharacterChars */ ('`' | '\\')
+    | EscapeSequence ) '`'
     ;
 
 fragment
 NonCharacterChars
-    :    '`' | '\\' | '\t' | '\n' | '\f' | '\r' | '\b'
+    :    '`' | '\\'
     ;
 
 QUOTED_LITERAL

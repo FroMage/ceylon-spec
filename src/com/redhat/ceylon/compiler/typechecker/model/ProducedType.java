@@ -40,12 +40,14 @@ public class ProducedType extends ProducedReference {
     }
     
     public boolean isExactly(ProducedType type, boolean selfTypesSame) {
-        if (getDeclaration() instanceof BottomType) {
-            return type.getDeclaration() instanceof BottomType;
+        TypeDeclaration declaration = getDeclaration();
+        TypeDeclaration thatDeclaration = type.getDeclaration();
+        if (declaration instanceof BottomType) {
+            return thatDeclaration instanceof BottomType;
         }
-        else if (getDeclaration() instanceof UnionType) {
+        else if (declaration instanceof UnionType) {
             List<ProducedType> cases = getCaseTypes();
-            if (type.getDeclaration() instanceof UnionType) {
+            if (thatDeclaration instanceof UnionType) {
                 List<ProducedType> otherCases = type.getCaseTypes();
                 if (cases.size()!=otherCases.size()) {
                     return false;
@@ -74,9 +76,9 @@ public class ProducedType extends ProducedReference {
                 return false;
             }
         }
-        else if (getDeclaration() instanceof IntersectionType) {
+        else if (declaration instanceof IntersectionType) {
             List<ProducedType> types = getSatisfiedTypes();
-            if (type.getDeclaration() instanceof IntersectionType) {
+            if (thatDeclaration instanceof IntersectionType) {
                 List<ProducedType> otherTypes = type.getSatisfiedTypes();
                 if (types.size()!=otherTypes.size()) {
                     return false;
@@ -105,7 +107,7 @@ public class ProducedType extends ProducedReference {
                 return false;
             }
         }
-        else if (type.getDeclaration() instanceof UnionType) {
+        else if (thatDeclaration instanceof UnionType) {
             List<ProducedType> otherCases = type.getCaseTypes();
             if (otherCases.size()==1) {
                 ProducedType st = otherCases.get(0);
@@ -115,7 +117,7 @@ public class ProducedType extends ProducedReference {
                 return false;
             }
         }
-        else if (type.getDeclaration() instanceof IntersectionType) {
+        else if (thatDeclaration instanceof IntersectionType) {
             List<ProducedType> otherTypes = type.getSatisfiedTypes();
             if (otherTypes.size()==1) {
                 ProducedType st = otherTypes.get(0);
@@ -126,27 +128,29 @@ public class ProducedType extends ProducedReference {
             }
         }
         else {
-            if (!type.getDeclaration().equals(getDeclaration())) {
+            Map<TypeParameter, ProducedType> typeArguments = getTypeArguments();
+            Map<TypeParameter, ProducedType> thatTypeArguments = type.getTypeArguments();
+            if (!thatDeclaration.equals(declaration)) {
                 if (selfTypesSame) {
-                    ProducedType selfType = getDeclaration().getSelfType();
+                    ProducedType selfType = declaration.getSelfType();
                     if (selfType!=null &&
                             type.isSubtypeOf(this) &&
-                            type.isExactly(selfType.substitute(getTypeArguments()))) {
+                            type.isExactly(selfType.substitute(typeArguments))) {
                         return true;
                     }
-                    ProducedType typeSelfType = type.getDeclaration().getSelfType();
+                    ProducedType typeSelfType = thatDeclaration.getSelfType();
                     if (typeSelfType!=null &&
                             isSubtypeOf(type) &&
-                            isExactly(typeSelfType.substitute(type.getTypeArguments()))) {
+                            isExactly(typeSelfType.substitute(thatTypeArguments))) {
                         return true;
                     }
                 }
                 return false;
             }
             else {
-                ProducedType qt = getDeclaration().isStaticallyImportable() ?
+                ProducedType qt = declaration.isStaticallyImportable() ?
                         null : getQualifyingType();
-                ProducedType tqt = type.getDeclaration().isStaticallyImportable() ? 
+                ProducedType tqt = thatDeclaration.isStaticallyImportable() ? 
                         null : type.getQualifyingType();
                 if (qt==null) {
                     if (tqt!=null) {
@@ -158,18 +162,19 @@ public class ProducedType extends ProducedReference {
                         return false;
                     }
                     else {
-                        TypeDeclaration totd = (TypeDeclaration) type.getDeclaration().getContainer();
+                        TypeDeclaration totd = (TypeDeclaration) thatDeclaration.getContainer();
                         ProducedType tqts = tqt.getSupertype(totd);
-                        TypeDeclaration otd = (TypeDeclaration) getDeclaration().getContainer();
+                        TypeDeclaration otd = (TypeDeclaration) declaration.getContainer();
                         ProducedType qts = qt.getSupertype(otd);
                         if ( !qts.isExactly(tqts) ) {
                             return false;
                         }
                     }
                 }
-                for (TypeParameter p: getDeclaration().getTypeParameters()) {
-                    ProducedType arg = getTypeArguments().get(p);
-                    ProducedType otherArg = type.getTypeArguments().get(p);
+                List<TypeParameter> declarationTypeParameters = declaration.getTypeParameters();
+                for (TypeParameter p: declarationTypeParameters) {
+                    ProducedType arg = typeArguments.get(p);
+                    ProducedType otherArg = thatTypeArguments.get(p);
                     if (arg==null || otherArg==null) {
                         return false;
                         /*throw new RuntimeException(

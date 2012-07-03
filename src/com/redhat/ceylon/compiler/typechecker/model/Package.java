@@ -15,6 +15,7 @@ public class Package
         implements ImportableScope, Referenceable {
 
     private List<String> name;
+    private String nameAsString;
     private Module module;
     private List<Unit> units = new ArrayList<Unit>();
     private boolean shared = false;
@@ -35,6 +36,7 @@ public class Package
 
     public void setName(List<String> name) {
         this.name = name;
+        this.nameAsString = formatPath(name);
     }
     
     public Iterable<Unit> getUnits() {
@@ -82,7 +84,7 @@ public class Package
     }
 
     public String getNameAsString() {
-        return formatPath(name);
+        return nameAsString;
     }
 
     @Override
@@ -211,13 +213,15 @@ public class Package
 
     @Override
     public int hashCode() {
-        return getName().hashCode();
+        return nameAsString.hashCode();
     }
     
     @Override
     public boolean equals(Object obj) {
+        if(this == obj)
+            return true;
         if (obj instanceof Package) {
-            return ((Package) obj).getName().equals(getName());
+            return nameAsString.equals(((Package)obj).nameAsString);
         }
         else {
             return false;

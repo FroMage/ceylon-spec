@@ -158,11 +158,22 @@ public abstract class TypeDeclaration extends Declaration
     
     @Override
     public boolean equals(Object object) {
-        return super.equals(object) && 
-                getTypeParameters().size()==
-                    ((TypeDeclaration) object).getTypeParameters().size();
+        if(this == object)
+            return true;
+        return super.equals(object) &&
+                // FIXME: just the size, really?
+                typeParameters.size() ==
+                    ((TypeDeclaration) object).typeParameters.size();
     }
-
+    
+    @Override
+    public int hashCode() {
+        int hash = super.hashCode();
+        // FIXME: just the size, really?
+        hash = 31 * hash + typeParameters.size();
+        return hash;
+    }
+    
     /**
      * The type of the declaration as seen from
      * within the body of the declaration itself.

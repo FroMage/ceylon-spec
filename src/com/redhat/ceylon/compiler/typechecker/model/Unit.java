@@ -161,6 +161,8 @@ public class Unit {
     
     @Override
     public boolean equals(Object obj) {
+        if(obj == this)
+            return true;
         if (obj instanceof Unit) {
             Unit that = (Unit) obj;
             return that.getPackage().equals(getPackage())

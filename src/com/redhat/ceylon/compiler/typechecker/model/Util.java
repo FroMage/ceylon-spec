@@ -519,8 +519,8 @@ public class Util {
     public static String formatPath(List<String> path) {
         StringBuilder sb = new StringBuilder();
         for (int i=0; i<path.size(); i++) {
+            if (i>0) sb.append('.');
             sb.append(path.get(i));
-            if (i<path.size()-1) sb.append('.');
         }
         return sb.toString();
     }

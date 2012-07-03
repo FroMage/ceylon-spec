@@ -211,15 +211,23 @@ public abstract class Declaration
     public abstract ProducedReference getProducedReference(ProducedType pt,
             List<ProducedType> typeArguments);
 
+    private static boolean nullSafeEq(Object a, Object b){
+        if(a == null)
+            return b == null;
+        if(b == null)
+            return false;
+        return a.equals(b);
+    }
+    
     @Override
     public boolean equals(Object object) {
+        if(object == this)
+            return true;
         if (object instanceof Declaration) {
             Declaration that = (Declaration) object;
-            return this==that || getName()!=null && that.getName()!=null &&
-                    that.getName().equals(getName()) &&
-                    that.getDeclarationKind()==getDeclarationKind() &&
-                    (getContainer()==null && that.getContainer()==null ||
-                            that.getContainer().equals(getContainer())); 
+            return  (nullSafeEq(name, that.name)
+                       && that.getDeclarationKind() == getDeclarationKind()
+                       && nullSafeEq(getContainer(), that.getContainer()));
         }
         else {
             return false;
@@ -228,7 +236,12 @@ public abstract class Declaration
     
     @Override
     public int hashCode() {
-        return getName()==null ? 0 : getName().hashCode();
+        int hash = 17;
+        if(name != null)
+            hash = 31 * hash + name.hashCode();
+        if(getContainer() != null)
+            hash = 31 * hash + getContainer().hashCode();
+        return hash;
     }
     
     /**

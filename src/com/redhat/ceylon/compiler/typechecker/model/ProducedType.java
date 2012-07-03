@@ -172,6 +172,9 @@ public class ProducedType extends ProducedReference {
                     }
                 }
                 List<TypeParameter> declarationTypeParameters = declaration.getTypeParameters();
+                // quick exit
+                if(declarationTypeParameters.isEmpty())
+                    return true;
                 for (TypeParameter p: declarationTypeParameters) {
                     ProducedType arg = typeArguments.get(p);
                     ProducedType otherArg = thatTypeArguments.get(p);

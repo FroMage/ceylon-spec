@@ -215,7 +215,7 @@ public class Package
 
     @Override
     public int hashCode() {
-        return nameAsString.hashCode();
+        return nameAsString == null ? 0 : nameAsString.hashCode();
     }
     
     @Override

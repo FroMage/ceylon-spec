@@ -172,7 +172,8 @@ public abstract class TypeDeclaration extends Declaration
     public int hashCode() {
         int hash = super.hashCode();
         // FIXME: just the size, really?
-        hash = 31 * hash + typeParameters.size();
+        if(typeParameters != null)
+            hash = 31 * hash + typeParameters.size();
         return hash;
     }
     

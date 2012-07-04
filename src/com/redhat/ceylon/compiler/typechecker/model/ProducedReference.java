@@ -21,6 +21,12 @@ public abstract class ProducedReference implements Serializable {
     private Declaration declaration;
     private ProducedType qualifyingType;
 
+    public void rehash(){
+        Map<TypeParameter, ProducedType> typeArguments = new HashMap<TypeParameter, ProducedType>();
+        typeArguments.putAll(this.typeArguments);
+        this.typeArguments = typeArguments;
+    }
+
     public ProducedType getQualifyingType() {
         return qualifyingType;
     }

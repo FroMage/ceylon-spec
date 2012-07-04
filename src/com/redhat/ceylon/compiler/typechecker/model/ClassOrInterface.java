@@ -7,6 +7,8 @@ import java.util.List;
 
 public abstract class ClassOrInterface extends TypeDeclaration {
 
+    private static final long serialVersionUID = -4955333713154757108L;
+
     @Override
     public boolean isMember() {
         return getContainer() instanceof ClassOrInterface;

@@ -5,6 +5,8 @@ import java.util.List;
 
 public class TypeParameter extends TypeDeclaration implements Functional {
 
+    private static final long serialVersionUID = 37305160009103277L;
+
     private boolean covariant;
     private boolean contravariant;
     private boolean sequenced;

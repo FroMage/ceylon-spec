@@ -2,6 +2,8 @@ package com.redhat.ceylon.compiler.typechecker.model;
 
 public abstract class MethodOrValue extends TypedDeclaration {
     
+    private static final long serialVersionUID = -4162364760303166877L;
+
     private boolean shortcutRefinement;
     private ValueParameter initializerParameter;
     

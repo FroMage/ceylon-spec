@@ -17,6 +17,8 @@ public class Method extends MethodOrValue implements Generic, Scope, Functional 
 
     //private boolean formal;
 
+    private static final long serialVersionUID = -3711525555611239691L;
+
     private List<TypeParameter> typeParameters = Collections.emptyList();
     private List<ParameterList> parameterLists = new ArrayList<ParameterList>();
     private boolean overloaded;

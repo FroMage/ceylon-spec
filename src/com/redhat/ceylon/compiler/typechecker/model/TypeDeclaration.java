@@ -16,6 +16,8 @@ import java.util.TreeMap;
 public abstract class TypeDeclaration extends Declaration 
         implements ImportableScope, Generic, Cloneable {
 
+    private static final long serialVersionUID = 4975669552287373021L;
+
     private ProducedType extendedType;
     private List<ProducedType> satisfiedTypes = new ArrayList<ProducedType>();
     private List<ProducedType> caseTypes = null;

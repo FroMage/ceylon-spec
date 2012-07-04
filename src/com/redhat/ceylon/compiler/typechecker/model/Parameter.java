@@ -3,7 +3,9 @@ package com.redhat.ceylon.compiler.typechecker.model;
 
 public abstract class Parameter extends TypedDeclaration {
     
-	private boolean defaulted;
+    private static final long serialVersionUID = 7877329782921156945L;
+
+    private boolean defaulted;
 	private boolean sequenced;
     private Declaration declaration;
     private boolean captured = false;

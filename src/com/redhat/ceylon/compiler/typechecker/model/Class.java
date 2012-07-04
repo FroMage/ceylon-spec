@@ -9,6 +9,8 @@ import java.util.List;
 
 public class Class extends ClassOrInterface implements Functional {
 
+    private static final long serialVersionUID = 5691767791288958040L;
+
     private boolean abstr;
     private ParameterList parameterList;
     private boolean overloaded;

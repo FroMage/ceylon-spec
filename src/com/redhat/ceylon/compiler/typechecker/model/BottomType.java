@@ -5,6 +5,8 @@ import java.util.List;
 
 public class BottomType extends TypeDeclaration {
     
+    private static final long serialVersionUID = 2137085390782387563L;
+
     public BottomType(Unit unit) {
         this.unit = unit;
     }

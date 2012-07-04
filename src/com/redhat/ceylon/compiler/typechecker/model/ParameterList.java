@@ -1,10 +1,13 @@
 package com.redhat.ceylon.compiler.typechecker.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParameterList {
+public class ParameterList implements Serializable {
     
+    private static final long serialVersionUID = -3623327480774107914L;
+
     private List<Parameter> parameters = new ArrayList<Parameter>();
     private boolean supportsNamedParameters = true;
     

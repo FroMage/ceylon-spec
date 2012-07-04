@@ -1,6 +1,8 @@
 package com.redhat.ceylon.compiler.typechecker.model;
 
+import java.io.Serializable;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -9,7 +11,9 @@ import java.util.Map;
  *
  * @author Gavin King
  */
-public abstract class ProducedReference {
+public abstract class ProducedReference implements Serializable {
+
+    private static final long serialVersionUID = -2415389105949846818L;
 
     ProducedReference() {}
 

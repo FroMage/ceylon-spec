@@ -1,12 +1,16 @@
 package com.redhat.ceylon.compiler.typechecker.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Annotation {
-	private String name;
+public class Annotation implements Serializable {
+
+    private static final long serialVersionUID = 7386263346052027518L;
+    
+    private String name;
 	private Map<String,String> namedArguments = new HashMap<String,String>();
 	private List<String> positionalArguments = new ArrayList<String>();
     

@@ -6,6 +6,8 @@ import java.util.Map;
 
 public class UnionType extends TypeDeclaration {
 
+    private static final long serialVersionUID = -1009699516217740675L;
+
     public UnionType(Unit unit) {
         this.unit = unit;
     }

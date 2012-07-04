@@ -21,6 +21,8 @@ import java.util.Map;
  */
 public class ProducedType extends ProducedReference {
     
+    private static final long serialVersionUID = 529435977059859215L;
+
     private String underlyingType;
     private boolean isRaw;
 

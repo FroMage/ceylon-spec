@@ -1,5 +1,6 @@
 package com.redhat.ceylon.compiler.typechecker.model;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +11,7 @@ import java.util.Map;
  *
  * @author Gavin King
  */
-public interface Scope {
+public interface Scope extends Serializable {
     
     public String getQualifiedNameString();
 

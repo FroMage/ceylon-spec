@@ -5,6 +5,8 @@ import java.util.List;
 
 public class UnknownType extends TypeDeclaration {
 
+    private static final long serialVersionUID = -228242977535217779L;
+
     public UnknownType(Unit unit) {
         this.unit = unit;
     }

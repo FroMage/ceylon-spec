@@ -6,6 +6,7 @@ import static com.redhat.ceylon.compiler.typechecker.model.Util.isTypeUnknown;
 import static com.redhat.ceylon.compiler.typechecker.model.Util.producedType;
 import static com.redhat.ceylon.compiler.typechecker.model.Util.unionType;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -15,9 +16,11 @@ import java.util.TreeMap;
 
 import com.redhat.ceylon.compiler.typechecker.tree.Tree.Identifier;
 
-public class Unit {
+public class Unit implements Serializable {
 
-	private Package pkg;
+    private static final long serialVersionUID = -2490481714794991630L;
+
+    private Package pkg;
 	private List<Import> imports = new ArrayList<Import>();
 	private List<Declaration> declarations = new ArrayList<Declaration>();
 	private String filename;

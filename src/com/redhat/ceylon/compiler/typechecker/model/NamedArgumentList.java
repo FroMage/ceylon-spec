@@ -6,6 +6,8 @@ import java.util.Map;
 
 public class NamedArgumentList extends Element implements Scope {
 	
+    private static final long serialVersionUID = 5991298884687019316L;
+
     private boolean synthetic;
     private ParameterList parameterList;
     private List<String> argumentNames = new ArrayList<String>();

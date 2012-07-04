@@ -8,7 +8,9 @@ package com.redhat.ceylon.compiler.typechecker.model;
  */
 public class Getter extends MethodOrValue implements Scope {
 
-	private Setter setter;
+    private static final long serialVersionUID = 5072981378615876444L;
+
+    private Setter setter;
 
     public Setter getSetter() {
         return setter;

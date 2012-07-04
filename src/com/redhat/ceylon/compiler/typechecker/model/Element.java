@@ -5,13 +5,16 @@ import static com.redhat.ceylon.compiler.typechecker.model.Util.isOverloadedVers
 import static com.redhat.ceylon.compiler.typechecker.model.Util.isResolvable;
 import static com.redhat.ceylon.compiler.typechecker.model.Util.lookupMember;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public abstract class Element {
+public abstract class Element implements Serializable {
 
-	private Scope container;
+    private static final long serialVersionUID = -7073023844022646765L;
+
+    private Scope container;
 	protected Unit unit;
 	private List<Declaration> members = new ArrayList<Declaration>();
 

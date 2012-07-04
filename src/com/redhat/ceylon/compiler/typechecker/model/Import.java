@@ -1,8 +1,12 @@
 package com.redhat.ceylon.compiler.typechecker.model;
 
-public class Import {
+import java.io.Serializable;
+
+public class Import implements Serializable {
 	
-	private TypeDeclaration typeDeclaration;
+    private static final long serialVersionUID = 5986201817631766626L;
+
+    private TypeDeclaration typeDeclaration;
 	private String alias;
 	private Declaration declaration;
 	private boolean wildcardImport;

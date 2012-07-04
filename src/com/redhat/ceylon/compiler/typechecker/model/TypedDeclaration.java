@@ -15,6 +15,8 @@ import java.util.Map;
  */
 public abstract class TypedDeclaration extends Declaration {
 
+    private static final long serialVersionUID = 6355032284505310342L;
+
     private ProducedType type;
     private boolean uncheckedNullType = false;
     private Boolean unboxed;

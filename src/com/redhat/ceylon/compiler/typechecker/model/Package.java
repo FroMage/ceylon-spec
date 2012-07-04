@@ -14,6 +14,8 @@ import java.util.TreeMap;
 public class Package 
         implements ImportableScope, Referenceable {
 
+    private static final long serialVersionUID = 5544488628918771941L;
+
     private List<String> name;
     private String nameAsString;
     private Module module;

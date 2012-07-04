@@ -4,13 +4,16 @@ import static com.redhat.ceylon.compiler.typechecker.model.Util.isNameMatching;
 import static com.redhat.ceylon.compiler.typechecker.model.Util.isOverloadedVersion;
 import static com.redhat.ceylon.compiler.typechecker.model.Util.isResolvable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 public class Module 
-        implements Referenceable {
+        implements Referenceable, Serializable {
+
+    private static final long serialVersionUID = -7455126431371867001L;
 
     public static final String DEFAULT_MODULE_NAME = "default";
 

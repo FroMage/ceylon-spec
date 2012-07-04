@@ -17,7 +17,9 @@ public abstract class Declaration
         extends Element 
         implements Referenceable {
 
-	private String name;
+    private static final long serialVersionUID = -5240479210138691555L;
+
+    private String name;
 	private boolean shared;
 	private boolean formal;
 	private boolean actual;

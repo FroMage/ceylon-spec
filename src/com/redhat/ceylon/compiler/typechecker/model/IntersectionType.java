@@ -8,6 +8,8 @@ import java.util.List;
 
 public class IntersectionType extends TypeDeclaration {
 
+    private static final long serialVersionUID = 7194644803861429426L;
+
     public IntersectionType(Unit unit) {
         this.unit = unit;
     }

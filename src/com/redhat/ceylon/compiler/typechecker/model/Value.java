@@ -8,6 +8,8 @@ package com.redhat.ceylon.compiler.typechecker.model;
  */
 public class Value extends MethodOrValue {
 
+    private static final long serialVersionUID = 2551482529365621372L;
+
     private boolean variable;
     //private boolean formal;
     private boolean captured = false;

@@ -9,7 +9,9 @@ import java.util.List;
  */
 public class Setter extends MethodOrValue implements Scope {
 
-	private Getter getter;
+    private static final long serialVersionUID = 1680135910355942874L;
+
+    private Getter getter;
 	private ValueParameter parameter;
 
     public Getter getGetter() {

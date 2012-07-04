@@ -2,6 +2,9 @@ package com.redhat.ceylon.compiler.typechecker.model;
 
 
 public class ControlBlock extends Element implements Scope {
+
+    private static final long serialVersionUID = -5840480538320168334L;
+    
     private int id;
     public void setId(int id) {
         this.id = id;

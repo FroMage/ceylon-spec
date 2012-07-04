@@ -13,6 +13,8 @@ import java.util.List;
  */
 public class FunctionalParameter extends Parameter implements Scope, Functional {
     
+    private static final long serialVersionUID = -102371598303811515L;
+
     private List<ParameterList> parameterLists = new ArrayList<ParameterList>();
     private boolean declaredVoid;
     

@@ -71,6 +71,7 @@ public class Unit implements Serializable {
     public void addDeclaration(Declaration declaration) {
         synchronized (declarations) {
             declarations.add(declaration);
+            pkg.invalidateCache();
         }
     }
 

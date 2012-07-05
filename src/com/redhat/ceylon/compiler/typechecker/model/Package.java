@@ -7,6 +7,7 @@ import static com.redhat.ceylon.compiler.typechecker.model.Util.isResolvable;
 import static com.redhat.ceylon.compiler.typechecker.model.Util.lookupMember;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -67,17 +68,23 @@ public class Package
         this.shared = shared;
     }
     
+    private List<Declaration> cachedMembers = new ArrayList<Declaration>();
+    private Map<String, Declaration> cachedMembersByName = new HashMap<String, Declaration>();
+    private boolean cachedMembersUpToDate = false;
+    
     @Override
     public List<Declaration> getMembers() {
-        List<Declaration> result = new ArrayList<Declaration>();
-        for (Unit unit: getUnits()) {
-            for (Declaration d: unit.getDeclarations()) {
-                if (d.getContainer().equals(this)) {
-                    result.add(d);
+        if(!cachedMembersUpToDate){
+            for (Unit unit: getUnits()) {
+                for (Declaration d: unit.getDeclarations()) {
+                    if (d.getContainer().equals(this)) {
+                        cachedMembers.add(d);
+                    }
                 }
             }
+            cachedMembersUpToDate = true;
         }
-        return result;
+        return cachedMembers;
     }
 
     @Override
@@ -120,7 +127,13 @@ public class Package
 
     @Override
     public Declaration getDirectMember(String name, List<ProducedType> signature) {
-        return lookupMember(getMembers(), name, signature, false);
+        if(signature == null && cachedMembersByName != null && cachedMembersByName.containsKey(name))
+            return cachedMembersByName.get(name);
+        Declaration ret = lookupMember(getMembers(), name, signature, false);
+        if(signature == null && cachedMembersByName != null){
+            cachedMembersByName.put(name, ret);
+        }
+        return ret;
     }
 
     @Override
@@ -239,4 +252,10 @@ public class Package
 		this.unit = unit;
 	}
     
+    public void invalidateCache() {
+        cachedMembers.clear();
+        cachedMembersByName.clear();
+        cachedMembersUpToDate = false;
+    }
+
 }

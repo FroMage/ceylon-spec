@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import com.redhat.ceylon.compiler.typechecker.util.ProducedTypeNamePrinter;
@@ -34,6 +35,9 @@ public class ProducedType extends ProducedReference {
     private Map<TypeDeclaration, ProducedType> superTypesCache = 
             new HashMap<TypeDeclaration, ProducedType>();
 
+    private static ThreadLocal<HashSet<String>> pendingSubtypeChecks = new ThreadLocal<HashSet<String>>();
+    private static ThreadLocal<HashSet<String>> pendingIsExactlyChecks = new ThreadLocal<HashSet<String>>();
+    
     ProducedType() {}
 
     @Override
@@ -46,7 +50,12 @@ public class ProducedType extends ProducedReference {
      * given type? 
      */
     public boolean isExactly(ProducedType type) {
+        String key = addPendingCheck(pendingIsExactlyChecks, type);
+        try{
         return resolveAliases().isExactlyInternal(type.resolveAliases());
+        }finally{
+            pendingIsExactlyChecks.get().remove(key);
+        }
     }
     
     public boolean isExactlyInternal(ProducedType type) {
@@ -216,6 +225,9 @@ public class ProducedType extends ProducedReference {
      * a certain self type constraint.
      */
     public boolean isSubtypeOfInternal(ProducedType type) {
+        String key = addPendingCheck(pendingSubtypeChecks, type);
+        try{
+//        System.err.println(this+" "+this.hashCode()+" is subtype of? "+type+" "+type.hashCode());
 //        if (depth>30) {
 //            throw new RuntimeException("undecidable subtyping");
 //        }
@@ -328,8 +340,32 @@ public class ProducedType extends ProducedReference {
                 return true;
             }
         }
+        }finally{
+            pendingSubtypeChecks.get().remove(key);
+        }
 //        }
 //        finally { depth--; }
+    }
+
+    private String addPendingCheck(ThreadLocal<HashSet<String>> pendingChecks, ProducedType type) {
+        String thisString = getProducedTypeQualifiedName();
+        String otherString = type.getProducedTypeQualifiedName();
+        String key = thisString+"/"+otherString;
+        HashSet<String> pendingSubtypeChecksValue = pendingChecks.get();
+//        System.err.println("sub-type check for : "+key);
+        if(pendingSubtypeChecksValue == null){
+//            System.err.println("pending sub-type checks was null");
+            pendingSubtypeChecksValue = new HashSet<String>();
+            pendingChecks.set(pendingSubtypeChecksValue);
+        }/*else
+            System.err.println("Pending subtype checks size: "+pendingSubtypeChecksValue.size());*/
+        if(!pendingSubtypeChecksValue.add(key)){
+            throw new RuntimeException("Non termination: "+this+" is subtype of "+type);
+        }
+//        for(String check : pendingSubtypeChecksValue){
+//            System.err.println(" - "+check);
+//        }
+        return key;
     }
 
     /**
